@@ -172,3 +172,26 @@ rio info --indent 2 ASTGTMV003_N27E086_dem_EPSG3857.tif
 ```bash
 rio rgbify  -b -10000  -i 0.1 ASTGTMV003_N27E086_dem_EPSG3857.tif ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif
 ```
+
+```bash
+gdallocationinfo -wgs84 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif 86.9305 27.9869
+```
+
+```console
+Report:
+  Location: (3144P,50L)
+  Band 1:
+    Value: 2
+  Band 2:
+    Value: 199
+  Band 3:
+    Value: 184
+```
+
+```py
+height = -10000 + ((R * 256 * 256 + G * 256 + B) * 0.1)
+```
+
+```
+height = -10000 + ((199 * 256 * 256 + 184 * 256 + 2) * 0.1)
+```

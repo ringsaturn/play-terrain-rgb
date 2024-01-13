@@ -5,6 +5,7 @@ brew install gdal geoip libspatialite librasterlite spatialite-gui spatialite-to
 ```
 
 ```bash
+pip install rasterio --no-binary rasterio
 pip install -r requirements.txt
 ```
 

@@ -1,5 +1,9 @@
 # Play terrain rgb
 
+Follow: <https://github.com/syncpoint/terrain-rgb>
+
+---
+
 ```bash
 brew install gdal geoip libspatialite librasterlite spatialite-gui spatialite-tools
 ```

@@ -234,7 +234,7 @@ gdal2tiles.py --zoom=5-15 --processes=16  ./tiles  132.77s user 15.79s system 12
 
 Make zoom=16
 
-``bash
+```bash
 time gdal2tiles.py --zoom=16 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif ./tiles
 ```
 
@@ -246,7 +246,7 @@ gdal2tiles.py --zoom=16 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.ti  3
 
 Make zoom=17
 
-``bash
+```bash
 time gdal2tiles.py --zoom=17 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif ./tiles
 ```
 

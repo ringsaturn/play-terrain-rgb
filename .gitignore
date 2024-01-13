@@ -1,2 +1,5 @@
 *.tif
 *.xml
+tmp/
+tiles/
+tilesets/

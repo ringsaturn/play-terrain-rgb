@@ -9,7 +9,7 @@ pip install rasterio --no-binary rasterio
 pip install -r requirements.txt
 ```
 
-Mt Everest `86.9305,27.9869`
+Mt Everest `86.922623,27.986065`
 
 ```bash
 rio info --indent 2 ASTGTMV003_N27E086_dem.tif
@@ -173,25 +173,96 @@ rio info --indent 2 ASTGTMV003_N27E086_dem_EPSG3857.tif
 rio rgbify  -b -10000  -i 0.1 ASTGTMV003_N27E086_dem_EPSG3857.tif ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif
 ```
 
+Try read original height
+
 ```bash
-gdallocationinfo -wgs84 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif 86.9305 27.9869
+gdallocationinfo -wgs84 ASTGTMV003_N27E086_dem.tif 86.92500829696657 27.988243465288956
 ```
 
 ```console
 Report:
-  Location: (3144P,50L)
+  Location: (3330P,42L)
+  Band 1:
+    Value: 8798
+```
+
+```bash
+gdallocationinfo -wgs84 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif 86.92500829696657 27.988243465288956
+```
+
+```console
+Report:
+  Location: (3125P,45L)
   Band 1:
     Value: 2
   Band 2:
-    Value: 199
+    Value: 222
   Band 3:
-    Value: 184
+    Value: 56
 ```
+
+Formula as:
 
 ```py
 height = -10000 + ((R * 256 * 256 + G * 256 + B) * 0.1)
 ```
 
+So:
+
+```py
+height = -10000 + ((2 * 256 * 256 + 222 * 256 + 56) * 0.1)
+# 8796
 ```
-height = -10000 + ((199 * 256 * 256 + 184 * 256 + 2) * 0.1)
+
+```bash
+time gdal2tiles.py --zoom=5-15 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif ./tiles
+```
+
+```console
+(play-terrain-rgb) ➜  play-terrain-rgb git:(main) ✗ time gdal2tiles.py --zoom=5-15 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif ./tiles
+Generating Base Tiles:
+0/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+/opt/homebrew/lib/python3.12/site-packages/osgeo/osr.py:410: FutureWarning: Neither osr.UseExceptions() nor osr.DontUseExceptions() has been explicitly called. In GDAL 4.0, exceptions will be enabled by default.
+  warnings.warn(
+...10...20...30...40...50...60...70...80...90...100 - done.
+Generating Overview Tiles:
+0...10...20...30...40...50...60...70...80...90...100 - done.
+gdal2tiles.py --zoom=5-15 --processes=16  ./tiles  132.77s user 15.79s system 1206% cpu 12.311 total
+```
+
+```bash
+mb-util --image_format=png --scheme=tms ./tiles/ ./ASTGTMV003_N27E086_dem_EPSG3857.RGB.mbtiles
+```
+
+```console
+12900 tiles inserted (17696 tiles/sec)mb-util --image_format=png --scheme=tms ./tiles/   0.32s user 1.18s system 75% cpu 1.970 total
 ```

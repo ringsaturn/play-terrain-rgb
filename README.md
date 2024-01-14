@@ -13,10 +13,10 @@ pip install rasterio --no-binary rasterio
 pip install -r requirements.txt
 ```
 
-Mt Everest `86.9249814748764 27.988684006936996`
+Mt Fuji `138.72739076614383 35.36067113569001`
 
 ```bash
-rio info --indent 2 ASTGTMV003_N27E086_dem.tif
+rio info --indent 2 ASTGTMV003_N35E138_dem.tif
 ```
 
 Output:
@@ -26,10 +26,10 @@ Output:
   "blockxsize": 256,
   "blockysize": 256,
   "bounds": [
-    85.9998611111111,
-    26.99986111111112,
-    87.00013888888888,
-    28.0001388888889
+    137.999861111111,
+    34.99986111111112,
+    139.00013888888876,
+    36.0001388888889
   ],
   "colorinterp": [
     "gray"
@@ -48,8 +48,8 @@ Output:
   ],
   "interleave": "band",
   "lnglat": [
-    86.5,
-    27.500000000000007
+    138.4999999999999,
+    35.500000000000014
   ],
   "mask_flags": [
     [
@@ -69,10 +69,10 @@ Output:
   "transform": [
     0.000277777777777778,
     0.0,
-    85.9998611111111,
+    137.999861111111,
     0.0,
     -0.000277777777777778,
-    28.0001388888889,
+    36.0001388888889,
     0.0,
     0.0,
     1.0
@@ -84,30 +84,25 @@ Output:
 }
 ```
 
+Clip range around Mt Everest:
+
 ```bash
-gdalwarp 
-    -t_srs EPSG:3857 
-    -dstnodata None 
-    -novshiftgrid
-    -co TILED=YES 
-    -co COMPRESS=DEFLATE 
-    -co BIGTIFF=IF_NEEDED
-    -r lanczos
-    ./ASTGTMV003_N27E086_dem.tif 
-    ASTGTMV003_N27E086_dem_EPSG3857.tif
+gdal_translate -projwin <经度_左上> <纬度_左上> <经度_右下> <纬度_右下> <原始文件路径> <输出文件路径>
+
+gdal_translate -projwin 138.626942 35.439672 138.899882  35.255449 ASTGTMV003_N35E138_dem.tif ASTGTMV003_N35E138_dem_clip.tif
 ```
 
 ```bash
-gdalwarp -t_srs EPSG:3857  -dstnodata None  -novshiftgrid -co TILED=YES  -co COMPRESS=DEFLATE  -co BIGTIFF=IF_NEEDED -r lanczos ASTGTMV003_N27E086_dem.tif  ASTGTMV003_N27E086_dem_EPSG3857.tif
+gdalwarp -t_srs EPSG:3857  -dstnodata None  -novshiftgrid -co TILED=YES  -co COMPRESS=DEFLATE  -co BIGTIFF=IF_NEEDED -r lanczos ASTGTMV003_N35E138_dem_clip.tif  ASTGTMV003_N35E138_dem_clip_EPSG3857.tif
 ```
 
-```
-Creating output file that is 3379P x 3810L.
-Processing ASTGTMV003_N27E086_dem.tif [1/1] : 0...10...20...30...40...50...60...70...80...90...100 - done.
+```txt
+Creating output file that is 914P x 756L.
+Processing ASTGTMV003_N35E138_dem_clip.tif [1/1] : 0...10...20...30...40...50...60...70...80...90...100 - done.
 ```
 
 ```bash
-rio info --indent 2 ASTGTMV003_N27E086_dem_EPSG3857.tif
+rio info --indent 2 ASTGTMV003_N35E138_dem_clip_EPSG3857.tif
 ```
 
 ```json
@@ -115,10 +110,10 @@ rio info --indent 2 ASTGTMV003_N27E086_dem_EPSG3857.tif
   "blockxsize": 256,
   "blockysize": 256,
   "bounds": [
-    9573460.747181138,
-    3123448.7161612394,
-    9684801.532496996,
-    3248991.3003735566
+    15431865.404742576,
+    4198669.725048377,
+    15462269.950626153,
+    4223818.342868929
   ],
   "colorinterp": [
     "gray"
@@ -131,14 +126,14 @@ rio info --indent 2 ASTGTMV003_N27E086_dem_EPSG3857.tif
   ],
   "driver": "GTiff",
   "dtype": "int16",
-  "height": 3810,
+  "height": 756,
   "indexes": [
     1
   ],
   "interleave": "band",
   "lnglat": [
-    86.49995675708664,
-    27.501113742296546
+    138.76336989692504,
+    35.347779733715655
   ],
   "mask_flags": [
     [
@@ -147,21 +142,21 @@ rio info --indent 2 ASTGTMV003_N27E086_dem_EPSG3857.tif
   ],
   "nodata": null,
   "res": [
-    32.95080950454515,
-    32.95080950454515
+    33.265367487502644,
+    33.265367487502644
   ],
   "shape": [
-    3810,
-    3379
+    756,
+    914
   ],
   "tiled": true,
   "transform": [
-    32.95080950454515,
+    33.265367487502644,
     0.0,
-    9573460.747181138,
+    15431865.404742576,
     0.0,
-    -32.95080950454515,
-    3248991.3003735566,
+    -33.265367487502644,
+    4223818.342868929,
     0.0,
     0.0,
     1.0
@@ -169,98 +164,66 @@ rio info --indent 2 ASTGTMV003_N27E086_dem_EPSG3857.tif
   "units": [
     null
   ],
-  "width": 3379
+  "width": 914
 }
 ```
 
 ```bash
-rio rgbify  -b -10000  -i 0.1 ASTGTMV003_N27E086_dem_EPSG3857.tif ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif
+rio rgbify -b -10000  -i 0.001 ASTGTMV003_N35E138_dem_clip_EPSG3857.tif ASTGTMV003_N35E138_dem_clip_EPSG3857.RGB.tif
 ```
 
 Try read original height
 
 ```bash
-gdallocationinfo -wgs84 ASTGTMV003_N27E086_dem.tif 86.9249814748764 27.988684006936996
+gdallocationinfo -wgs84 ASTGTMV003_N35E138_dem.tif 138.72739076614383 35.36067113569001
 ```
 
 ```console
 Report:
-  Location: (3330P,41L)
+  Location: (2619P,2302L)
   Band 1:
-    Value: 8800
+    Value: 3756
 ```
 
 ```bash
-gdallocationinfo -wgs84 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif 86.9249814748764 27.988684006936996
+gdallocationinfo -wgs84 ASTGTMV003_N35E138_dem_clip_EPSG3857.RGB.tif 138.72739076614383 35.36067113569001
 ```
 
 ```console
 Report:
-  Location: (3125P,43L)
+  Location: (336P,325L)
   Band 1:
-    Value: 2
+    Value: 209
   Band 2:
-    Value: 222
+    Value: 234
   Band 3:
-    Value: 56
+    Value: 72
 ```
 
 Formula as:
 
 ```py
-height = -10000 + ((R * 256 * 256 + G * 256 + B) * 0.1)
+# 0.001 came from `rio rgbify`'s `-i` option
+height = -10000 + ((R * 256 * 256 + G * 256 + B) * 0.001)
 ```
 
 So:
 
 ```py
-height = -10000 + ((2 * 256 * 256 + 222 * 256 + 56) * 0.1)
-# 8796
+height = -10000 + ((209 * 256 * 256 + 234 * 256 + 72) * 0.001)
+# 3757
 ```
 
-Make zoom=5-15
+Make zoom=5-19
 
 ```bash
-time gdal2tiles.py --zoom=5-15 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif ./tiles
+time gdal2tiles.py --zoom=5-19 --processes=16 ASTGTMV003_N35E138_dem_clip_EPSG3857.RGB.tif ./tiles
 ```
 
-```console
+```txt
 Generating Base Tiles:
 ...10...20...30...40...50...60...70...80...90...100 - done.
 Generating Overview Tiles:
 0...10...20...30...40...50...60...70...80...90...100 - done.
-gdal2tiles.py --zoom=5-15 --processes=16  ./tiles  132.77s user 15.79s system 1206% cpu 12.311 total
-```
-
-Make zoom=16
-
-```bash
-time gdal2tiles.py --zoom=16 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif ./tiles
-```
-
-```console
-Generating Base Tiles:
-...10...20...30...40...50...60...70...80...90...100 - done.
-gdal2tiles.py --zoom=16 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.ti  338.38s user 46.39s system 1345% cpu 28.594 total
-```
-
-Make zoom=17
-
-```bash
-time gdal2tiles.py --zoom=17 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.tif ./tiles
-```
-
-```console
-Generating Base Tiles:
-...10...20...30...40...50...60...70...80...90...100 - done.
-gdal2tiles.py --zoom=17 --processes=16 ASTGTMV003_N27E086_dem_EPSG3857.RGB.ti  1345.22s user 198.35s system 1352% cpu 1:54.16 total
-```
-
-
-```bash
-mb-util --image_format=png --scheme=tms ./tiles/ ./ASTGTMV003_N27E086_dem_EPSG3857.RGB.mbtiles
-```
-
-```console
-12900 tiles inserted (17696 tiles/sec)mb-util --image_format=png --scheme=tms ./tiles/   0.32s user 1.18s system 75% cpu 1.970 total
+gdal2tiles.py --zoom=5-19 --processes=16  ./tiles  1332.07s user 360.34s system 1297% cpu 2:10.39 total
 ```

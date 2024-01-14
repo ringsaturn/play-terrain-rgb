@@ -225,3 +225,11 @@ Generating Overview Tiles:
 0...10...20...30...40...50...60...70...80...90...100 - done.
 gdal2tiles.py --zoom=5-19 --processes=16  ./tiles  1332.07s user 360.34s system 1297% cpu 2:10.39 total
 ```
+
+```bash
+mb-util --image_format=png --scheme=tms ./tiles/ ./ASTGTMV003_N35E138_dem_clip_EPSG3857.RGB.mbtiles
+```
+
+```txt
+176000 tiles inserted (24076 tiles/sec)mb-util --image_format=png --scheme=tms ./tiles/   2.12s user 3.92s system 75% cpu 7.995 total
+```

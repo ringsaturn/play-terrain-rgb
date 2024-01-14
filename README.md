@@ -87,8 +87,6 @@ Output:
 Clip range around Mt Everest:
 
 ```bash
-gdal_translate -projwin <经度_左上> <纬度_左上> <经度_右下> <纬度_右下> <原始文件路径> <输出文件路径>
-
 gdal_translate -projwin 138.626942 35.439672 138.899882  35.255449 ASTGTMV003_N35E138_dem.tif ASTGTMV003_N35E138_dem_clip.tif
 ```
 

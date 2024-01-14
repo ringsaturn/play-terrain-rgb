@@ -11,6 +11,7 @@ class ElevationProfile {
       center: [138.72739076614383, 35.36067113569001],
       zoom: 12,
     });
+    this.map.setMaxBounds([[138.626942, 35.255449], [138.899882, 35.439672]]);
 
     this.draw = new MapboxDraw({
       displayControlsDefault: false,

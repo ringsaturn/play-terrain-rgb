@@ -1,6 +1,10 @@
 # Play terrain rgb
 
-Follow: <https://github.com/syncpoint/terrain-rgb>
+Data process follow: <https://github.com/syncpoint/terrain-rgb>
+
+Try it online:
+
+[![](./sample.webp)](https://ringsaturn.github.io/play-terrain-rgb/)
 
 ---
 
